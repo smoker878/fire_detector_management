@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}新增表單{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="apply_department" required>部門</label>
+    <input name="apply_department" id="apply_department" value="{{ g.user['department'] }}" required>
+
+    <label for="applier_id">工號</label>
+    <input name="applier_id" id="applier_id" value="{{ g.user['user_id'] }}" required>
+
+    <label for="applier">姓名</label>
+    <input name="applier" id="applier" value="{{ g.user['username'] }}" required>
+
+    <label for="predict_to_work_date">預計工作日</label>
+    <input name="predict_to_work_date" id="predict_to_work_date"  type="date" required>
+
+    <label for="work_id">工單號碼</label>
+    <input name="work_id" id="work_id" required>
+
+    <label for="work_name">工作名稱</label>
+    <input name="work_name" id="work_name" required>
+
+    <label for="contractor">=承攬商</label>
+    <input name="contractor" id="contractor" required>
+
+    <label for="other_message">其他訊息</label>
+    <textarea name="other_message" id="other_message"></textarea>
+
+    <label for="device">bypass的偵測器()</label>
+    <textarea name="device" id="device"></textarea>
+
+
+    <input type="submit" value="送出">
+  </form>
+{% endblock %}

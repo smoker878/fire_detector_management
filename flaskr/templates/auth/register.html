@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}註冊{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="user_id">工號</label>
+    <input name="user_id" id="user_id" required>
+    <label for="username">姓名</label>
+    <input name="username" id="username" required>
+    <label for="department">部門</label>
+    <input type="department" name="department" id="department" required>
+    <label for="password">密碼</label>
+    <input type="password" name="password" id="password" required>
+
+    <input type="submit" value="註冊">
+  </form>
+{% endblock %}
