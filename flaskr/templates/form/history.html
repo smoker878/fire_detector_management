@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}歷史：所有表單{% endblock %}</h1>
+{% endblock %}
+
+
+{% block content %}
+{% for f in all_form %}
+<article class="post">
+<header>
+
+    <div>
+    <h1><a href="{{ url_for('form.form', requistion_id = f['requistion_id']) }}">
+    {{ f['work_name'] }} &emsp;工單：{{f['work_id']}}
+    </a></h1>
+    <div class="about"> Bypass單號：{{f['requistion_id']}}</div>
+    <div class="about">申請人：{{ f['applier'] }} &emsp;預計工作日：{{ f['predict_to_work_date'].strftime('%Y-%m-%d') }}</div>
+    <div class="about">  </div>
+
+
+    {% if f['reset_person_id'] %}
+        <div class="about"> 狀態：🟢已復原</div></div>
+    {% elif f['excutor_id']%}
+        <div class="about"> 狀態：⚠️Bypass執行中</div></div>
+        <a class="action" href="{{ url_for('form.reset', requistion_id = f['requistion_id']) }}">☘️復原(解除Bypass)</a>
+    {% else %}
+        <div class="about"> 狀態：📋申請中</div></div>
+        {% if g.user['user_id'] == f['applier_id'] %}
+           <a class="action" href="{{ url_for('form.delete', requistion_id = f['requistion_id']) }}">🗑抽回</a>
+        {% endif %}
+        <a class="action" href="{{ url_for('form.excute', requistion_id = f['requistion_id']) }}">🚨執行Bypass</a>
+    {% endif %}
+
+</header>
+</article>
+{% endfor %}
+{% endblock %}

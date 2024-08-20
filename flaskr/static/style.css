@@ -52,6 +52,7 @@ nav ul  {
 nav ul li a, nav ul li span, header .action {
   display: block;
   padding: 0.5rem;
+  font-size: 1.2em
 }
 
 .content {
@@ -91,9 +92,13 @@ nav ul li a, nav ul li span, header .action {
   margin-bottom: 0;
 }
 
+.about {
+    font-size: 1.3em;
+}
+
 .post .about {
-  color: slategray;
-  font-style: italic;
+  color: #222222;
+  font-style: normal;
 }
 
 .post .body {
@@ -131,4 +136,18 @@ input.danger {
 input[type=submit] {
   align-self: start;
   min-width: 10em;
+}
+
+.red-box {
+  border: dashed 5px red;
+  margin: 3% 0;
+  padding: 0 0:
+}
+
+a:hover{
+    background:yellow;
+}
+
+li a{
+    background:Lavender;
 }

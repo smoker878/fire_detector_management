@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}首頁{% endblock %}</h1>
+<!--  {% if g.user %}-->
+
+<!--  {% endif %}-->
+{% endblock %}
+
+{% block content %}
+  <h2>⚠️目前Bypass的設備</h2>
+  {% for device in curry_bypass %}
+  <div class="about">{{ device[0] }}</div>
+  {% endfor %}
+
+  <h2>👷執行中的工作</h2>
+  {% for f in curry_work %}
+  <div class="about"><a href="{{ url_for('form.form', requistion_id = f['requistion_id']) }}"> {{ f['work_name'] }}</a></div>
+  {% endfor %}
+
+{% endblock %}

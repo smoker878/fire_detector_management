@@ -8,9 +8,11 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
+  {% for device in curry_bypass %}
+
+  {% endfor %}
   {% for device in curry_bypass %}
   <div>{{ device }}</div>
   {% endfor %}
-</div>
+
 {% endblock %}

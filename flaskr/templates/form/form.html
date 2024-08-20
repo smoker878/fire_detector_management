@@ -1,13 +1,53 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}表單{% endblock %}</h1>
+  <h1>{% block title %}{{ f['work_name'] }} &emsp;工單：{{f['work_id']}}{% endblock %} &emsp;狀態：{{ state }}</h1>
 {% endblock %}
 
 
 {% block content %}
+  <div>
+  {% if g.user['user_id'] == f['applier_id'] and not f['excutor_id'] %}<!-- 未執行Bypass的表單才能刪除 -->
+  <a class="action" href="{{ url_for('form.delete', requistion_id = f['requistion_id']) }}">🗑️抽回</a>
+  {% endif %}
+  {% if  not f['excutor_id'] %}
+  <a class="action" href="{{ url_for('form.excute', requistion_id = f['requistion_id']) }}">🚨執行Bypass</a>
+  {% endif %}
+  {% if f['excutor_id'] and not f['reset_person_id'] %} <!-- 執行過Bypass，才能復原 -->
+  <a class="action" href="{{ url_for('form.reset', requistion_id = f['requistion_id']) }}"> ☘️復原(解除Bypass)</a>
+  {% endif %}
+  </div>
+  <div class="about">Bypass單號：{{f['requistion_id']}}</div>
+  <h2>申請</h2>
+  <div class="about">申請人：{{ f['applier'] }} &emsp;部門： {{ f['apply_department'] }} </div>
+  <h2>工作內容</h2>
+  <div class="about">工作內容：{{ f['work_name'] }}</div>
+  <div class="about">工單：{{f['work_id']}}</div>
+  <div class="about">承攬商：{{ f['applier'] }} </div>
+  <div class="about"> 預計工作日：{{ f['predict_to_work_date'].strftime('%Y-%m-%d') }}</div>
+  <div class="about"></div>
 
+  <h2>bypass的偵測器</h2>
   {% for divice in Bypass_device %}
-    <div>{{ divice }}</div>
+    <div>{{ divice[1] }}</div>
   {% endfor %}
+
+  {% if f['excutor_id']  %}
+    <h2>bypass執行</h2>
+    <div class="about">執行人：{{ f['excutor'] }} &emsp;部門： {{ f['excute_department'] }}&emsp; 日期：{{ f['excute_date'].strftime('%Y-%m-%d  %H:%M') }} </div>
+  {% endif %}
+  {% if f['reset_person_id'] %}
+    <h2>bypass復原</h2>
+    <div class="about">復原人：{{ f['reset_person'] }} &emsp;部門： {{ f['reset_department'] }} &emsp;日期：{{ f['reset_date'].strftime('%Y-%m-%d %H:%M') }} </div>
+    <div class="red-box">
+    <h2>需解除bypass的設備</h2>
+    {% if need_reset  %}
+      {% for device in need_reset %}
+        <div class="about">{{device[0]}}</div>
+      {% endfor %}
+    {% else %}
+        <div class="about">無須解除</div>
+    {% endif %}
+    </div>
+  {% endif %}
 {% endblock %}
