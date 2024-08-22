@@ -17,28 +17,29 @@
   <a class="action" href="{{ url_for('form.reset', requistion_id = f['requistion_id']) }}"> ☘️復原(解除Bypass)</a>
   {% endif %}
   </div>
+  <div><a class="action" href="{{ url_for('form.form_docx', requistion_id = f['requistion_id']) }}">📄下載Word文件</a></div>
   <div class="about">Bypass單號：{{f['requistion_id']}}</div>
   <h2>申請</h2>
-  <div class="about">申請人：{{ f['applier'] }} &emsp;部門： {{ f['apply_department'] }} </div>
+  <div class="about">申請人：{{ f['applier'] }} &emsp;部門： {{ f['apply_department'] }} &emsp;申請時間： {{ form_time['apply_date'] }}</div>
   <h2>工作內容</h2>
   <div class="about">工作內容：{{ f['work_name'] }}</div>
   <div class="about">工單：{{f['work_id']}}</div>
-  <div class="about">承攬商：{{ f['applier'] }} </div>
+  <div class="about">承攬商：{{ f['contractor'] }} </div>
   <div class="about"> 預計工作日：{{ f['predict_to_work_date'].strftime('%Y-%m-%d') }}</div>
-  <div class="about"></div>
+  <div class="about">其他訊息：{{f['other_message']}}</div>
 
   <h2>bypass的偵測器</h2>
   {% for divice in Bypass_device %}
-    <div>{{ divice[1] }}</div>
+    <div>{{ divice[0] }}</div>
   {% endfor %}
 
   {% if f['excutor_id']  %}
     <h2>bypass執行</h2>
-    <div class="about">執行人：{{ f['excutor'] }} &emsp;部門： {{ f['excute_department'] }}&emsp; 日期：{{ f['excute_date'].strftime('%Y-%m-%d  %H:%M') }} </div>
+    <div class="about">執行人：{{ f['excutor'] }} &emsp;部門： {{ f['excute_department'] }}&emsp; 日期：{{ form_time["excute_date"] }} </div>
   {% endif %}
   {% if f['reset_person_id'] %}
     <h2>bypass復原</h2>
-    <div class="about">復原人：{{ f['reset_person'] }} &emsp;部門： {{ f['reset_department'] }} &emsp;日期：{{ f['reset_date'].strftime('%Y-%m-%d %H:%M') }} </div>
+    <div class="about">復原人：{{ f['reset_person'] }} &emsp;部門： {{ f['reset_department'] }} &emsp;日期：{{ form_time['reset_date'] }} </div>
     <div class="red-box">
     <h2>需解除bypass的設備</h2>
     {% if need_reset  %}

@@ -36,7 +36,6 @@ def create_app(test_config=None):
 
     # apply the blueprints to the app
     from . import auth
-    from . import blog
     from . import form
 
     app.register_blueprint(auth.bp)

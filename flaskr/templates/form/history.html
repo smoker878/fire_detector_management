@@ -6,6 +6,30 @@
 
 
 {% block content %}
+<form method="get">
+    <div>
+    <label for="work_name" >工作名稱：</label>
+    <input name="work_name" id="work_name">
+    </div>
+    <div>
+    <label for="work_id" >工單號碼：</label>
+    <input name="work_id" id="work_id">
+    </div>
+    <div>
+    <label for="requistion_id" >Bypass單號碼：</label>
+    <input name="requistion_id" id="requistion_id">
+    </div>
+    <div>
+    <label for="predict_to_work_date_start">預計工作日：</label>
+    <input name="predict_to_work_date_start" id="predict_to_work_date_start"  type="date"> <span>~</span>
+    <input name="predict_to_work_date_end" id="predict_to_work_date_end"  type="date">
+    </div>
+    <div>
+    <label for="applier" >申請人：</label>
+    <input name="applier" id="applier">
+    </div>
+    <input type="submit" value="🔍搜尋">
+</form>
 {% for f in all_form %}
 <article class="post">
 <header>
