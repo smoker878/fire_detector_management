@@ -30,7 +30,7 @@ excutor TEXT,
 reset_date TIMESTAMP,
 reset_department TEXT,
 reset_person_id INTEGER,
-reset_person TEXT,
+reset_person TEXT
 );
 
 CREATE TABLE Bypass_device (

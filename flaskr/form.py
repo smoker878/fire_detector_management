@@ -106,15 +106,16 @@ def apply():
             flash(error)
         else:
             db = get_db()
-            db.execute(
+            requistion_id =db.execute(
                 "INSERT INTO BypassRequistion"
                 "(apply_department, applier_id, applier, predict_to_work_date, work_id, work_name, contractor, other_message )"
-                " VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                " VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING requistion_id",
                 (apply_department, applier_id, applier, predict_to_work_date, work_id, work_name, contractor, other_message),
-            )
+            ).fetchone()[0]
+
             db.commit()
-            requistion_id = db.execute("SELECT requistion_id FROM BypassRequistion WHERE work_id = ? AND predict_to_work_date =?", (work_id, predict_to_work_date)).fetchone()
-            all_device = [(requistion_id[0], i.replace("\n", "").replace(" ", "").upper()) for i in device.split(",")]
+            # requistion_id = db.execute("SELECT requistion_id FROM BypassRequistion WHERE work_id = ? AND predict_to_work_date =?", (work_id, predict_to_work_date)).fetchone()
+            all_device = [(requistion_id, i.replace("\n", "").replace(" ", "").upper()) for i in device.split(",")]
             db.executemany("INSERT INTO Bypass_device (requistion_id, device) VALUES (?, ?)", all_device)
             db.commit()
         return redirect(url_for("form.index"))
