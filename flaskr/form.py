@@ -102,24 +102,28 @@ def apply():
         device = request.form["device"]
 
         error = None
-        if error is not None:
-            flash(error)
-        else:
-            db = get_db()
+
+        db = get_db()
+        try:
             requistion_id =db.execute(
                 "INSERT INTO BypassRequistion"
                 "(apply_department, applier_id, applier, predict_to_work_date, work_id, work_name, contractor, other_message )"
                 " VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING requistion_id",
                 (apply_department, applier_id, applier, predict_to_work_date, work_id, work_name, contractor, other_message),
             ).fetchone()[0]
-
-            db.commit()
             # requistion_id = db.execute("SELECT requistion_id FROM BypassRequistion WHERE work_id = ? AND predict_to_work_date =?", (work_id, predict_to_work_date)).fetchone()
             all_device = [(requistion_id, i.replace("\n", "").replace(" ", "").upper()) for i in device.split(",")]
             db.executemany("INSERT INTO Bypass_device (requistion_id, device) VALUES (?, ?)", all_device)
+        except:
+            db.rollback()
+            error = "發生錯誤，請重新填寫"
+            flash(error)
+            return render_template("form/apply.html")
+        else:
             db.commit()
-        return redirect(url_for("form.index"))
-    return render_template("form/apply.html")
+            return redirect(url_for("form.form", requistion_id = requistion_id))
+
+    return render_template("form/apply.html")   #在沒有POST時返回表單填寫頁面
 
 @bp.route("/excute/<requistion_id>")
 @login_required
